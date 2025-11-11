@@ -185,7 +185,7 @@
         }
 
 
-        if($data["type"] === "confirmar_orcamento"){
+        if($data["type"] === "confirmar_orcamento"){ 
             $id = $data["id"];
             $status_atual = "Serviço";
             $stmt2 = $conn->prepare("UPDATE ordem_servico SET status_atual = :status_atual WHERE id = :id");
