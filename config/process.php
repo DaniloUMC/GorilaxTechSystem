@@ -187,10 +187,10 @@
 
         if($data["type"] === "confirmar_orcamento"){ 
             $id = $data["id"];
-            $status_atual = "Serviço";
-            $stmt2 = $conn->prepare("UPDATE ordem_servico SET status_atual = :status_atual WHERE id = :id");
+            $orc_aprovado = true;
+            $stmt2 = $conn->prepare("UPDATE ordem_servico SET orc_aprovado = :orc_aprovado WHERE id = :id");
             $stmt2->bindParam(":id", $data["id"]);
-            $stmt2->bindParam(":status_atual", $status_atual);
+            $stmt2->bindParam(":orc_aprovado", $orc_aprovado);
             $stmt2->execute();
 
             header("location:https://i.pinimg.com/originals/3d/92/cf/3d92cf4be9b5fe218db9d64fc9f85ec0.gif");
@@ -524,7 +524,7 @@
             // 🔽 Total geral
             $corpo .= "
                 <p><strong>Total:</strong> R$ " . number_format($totalGeral, 2, ',', '.') . "</p>
-                <p><strong>Para confirmar o seu orçamento, clique no link abaixo:</strong></p>
+                <p><strong>Para pré-autorizar o seu orçamento, clique no link abaixo:</strong></p>
                 <p>
                     <a href='http://localhost/GorilaxTech/confirmar_orcamento.php?id=" . $ordem["id"] . "' target='_blank'>
                         http://localhost/GorilaxTech/confirmar_orcamento.php?id=" . $ordem["id"] . "

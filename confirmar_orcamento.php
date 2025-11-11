@@ -29,7 +29,9 @@
 </head>
 <body>
   <div class="wrap" role="main">
-    <h1>Confirmar Orçamento</h1>
+    <h1>Pré-autorizar o seu Orçamento</h1>
+      <p class="lead">Para darmos sequência ao <strong>Serviço</strong>. Por favor, entre em contato conosco.</p>
+
 
     <form action="<?= $BASE_URL ?>config/process.php" method="POST" id="create-form">
         <input type="hidden" name="type" value="confirmar_orcamento">

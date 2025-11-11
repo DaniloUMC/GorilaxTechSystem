@@ -33,28 +33,25 @@
     $stmt->execute();
     $ordem_servicos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if($filtroStatus){
-        var_dump($ordem_servicos);
-        exit();
-    }
+    
     foreach ($ordem_servicos as &$ordem_servico) {
-    $id_cliente = $ordem_servico["id_cliente"];
+        $id_cliente = $ordem_servico["id_cliente"];
 
-    // Consulta para buscar o nome do cliente
-    $query = "SELECT nome FROM contatos WHERE id = :id_cliente";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
-    $stmt->execute();
+        // Consulta para buscar o nome do cliente
+        $query = "SELECT nome FROM contatos WHERE id = :id_cliente";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+        $stmt->execute();
 
-    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Adiciona o nome do cliente ao array da OS
-    if ($resultado) {
-        $ordem_servico["nome_cliente"] = $resultado["nome"];
-    } else {
-        $ordem_servico["nome_cliente"] = "Cliente não encontrado";
+        // Adiciona o nome do cliente ao array da OS
+        if ($resultado) {
+            $ordem_servico["nome_cliente"] = $resultado["nome"];
+        } else {
+            $ordem_servico["nome_cliente"] = "Cliente não encontrado";
+        }
     }
-}
 
     
 ?>
@@ -99,6 +96,8 @@
                     <th scope="col">Status Atual</th>
                     <th scope="col">Data Orçamento</th>
                     <th scope="col">Valor Total</th>
+                    <th scope="col">pré Aprovado?</th>
+
                     <th scope="col">Entregue?</th>
                     <th scope="col"></th>
                 </tr>
@@ -109,7 +108,9 @@
                         $idFormatado = str_pad($ordem_servico['id'], 6, '0', STR_PAD_LEFT);
                         $entrega = $ordem_servico['entregue'] ? "Sim" : "Não";
                         $data_orcamento = !empty($ordem_servico['data_orcamento']) ? 
-                                          $ordem_servico['data_orcamento'] : "Orçamento não aberto";
+                        $ordem_servico['data_orcamento'] : "Orçamento não aberto";
+                        $orc_aprovado = $ordem_servico['orc_aprovado'] ? "Sim" : "Não";
+
                     ?>
                     <tr>
                         <td><?= $idFormatado ?></td>
@@ -118,6 +119,8 @@
                         <td><?= htmlspecialchars($ordem_servico['status_atual']) ?></td>
                         <td><?= htmlspecialchars($data_orcamento) ?></td>
                         <td>R$ <?= number_format($ordem_servico['valor_total_orcamento'], 2, ',', '.') ?></td>
+                        <td><?= htmlspecialchars($orc_aprovado) ?></td>
+
                         <td><?= $entrega ?></td>
 
                         <td class="actions">
