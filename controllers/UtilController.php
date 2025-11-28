@@ -42,7 +42,7 @@ function loginController($data, $BASE_URL) {
 // =======================
 function enviarServicoController($utilDAO, $data, $BASE_URL) {
     $id = $data["id"];
-
+    $utilDAO = new UtilDAO($utilDAO);
     $ordem = $utilDAO->buscarIdClienteOrdem($id);
     $id_cliente = $ordem["id_cliente"];
 
@@ -64,7 +64,7 @@ function enviarServicoController($utilDAO, $data, $BASE_URL) {
     $utilDAO->atualizarStatusOrdem($id, "Finalizado");
 
     $_SESSION["msg"] = "Link criado e enviado com sucesso!";
-    header("location:" . $BASE_URL . "../ordem_servico_listar.php");
+    header("location:" . $BASE_URL . "../views/ordem_servico_listar.php");
     exit();
 }
 
@@ -73,11 +73,13 @@ function enviarServicoController($utilDAO, $data, $BASE_URL) {
 // =======================
 function definirEntregueController($utilDAO, $data, $BASE_URL) {
     if ($data["type"] === "entregue") {
+
+        $utilDAO = new UtilDAO($utilDAO);
         $id = $data["id"];
         $utilDAO->definirEntregue($id);
 
         $_SESSION["msg"] = "Atualizado como entregue!";
-        header("location:" . $BASE_URL . "../ordem_servico_listar.php");
+        header("location:" . $BASE_URL . "../views/ordem_servico_listar.php");
         exit();
     }
 }
@@ -109,6 +111,7 @@ function alterarSenhaController($utilDAO, $email, $frase, $novaSenha, $BASE_URL)
 // Confirmar Orçamento
 // =======================
 function confirmarOrcamentoController($utilDAO, $data) {
+    $utilDAO = new UtilDAO($utilDAO);
     $id = $data["id"];
     $utilDAO->confirmarOrcamento($id);
 
@@ -192,8 +195,8 @@ function createOrcamentoController($utilDAO, $data, $BASE_URL) {
 
     $corpo .= "<p><strong>Total:</strong> R$ " . number_format($totalGeral, 2, ',', '.') . "</p>
                <p><strong>Para pré-autorizar o seu orçamento, clique no link abaixo:</strong></p>
-               <p><a href='{$BASE_URL}../confirmar_orcamento.php?id={$ordem['id']}' target='_blank'>
-                   {$BASE_URL}../confirmar_orcamento.php?id={$ordem['id']}
+               <p><a href='{$BASE_URL}../views/confirmar_orcamento.php?id={$ordem['id']}' target='_blank'>
+                   {$BASE_URL}../views/confirmar_orcamento.php?id={$ordem['id']}
                </a></p>";
 
     enviarEmail($contato["email"], $contato["nome"], $corpo);
