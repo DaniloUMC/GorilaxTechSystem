@@ -2,6 +2,14 @@
 Projeto Gorilax Tech Sistema de gerenciamento
 // -----------------------------------------------
 
+
+
+Tecnologias Utilizadas:
+Banco de Dados: MYSQL
+Frontend: JavaScript
+BackEnd: PHP
+Estrutura e estilização: HTML 5 e CSS
+
 Acesso ao BD:
 
 $host = "localhost";
