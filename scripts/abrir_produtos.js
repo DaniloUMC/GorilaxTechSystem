@@ -1,9 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Array global com produtos selecionados})
     window.produtosSelecionados = window.produtosSelecionados || [];
 
-    // Abre a popup e inicializa os produtos marcados
     window.abrirProdutos = function () {
         const popup = window.open("selecionar_produtos.php", "SelecionarProdutos", "width=900,height=700");
 
@@ -24,13 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 200);
     };
 
-    // Função chamada pela popup ao confirmar seleção
     window.adicionarProdutosSelecionados = function (lista) {
         window.produtosSelecionados = Array.isArray(lista) ? lista : [];
         atualizarTabelaPrincipal();
     };
 
-    // Atualiza a tabela principal e o campo hidden
     function atualizarTabelaPrincipal() {
         const tabelaDiv = document.getElementById("tabelaSelecionados");
         const campoHidden = document.getElementById("produtos_string");
@@ -75,12 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
         html += "</tbody></table>";
         tabelaDiv.innerHTML = html;
 
-        // Atualiza o campo hidden
         if (campoHidden) campoHidden.value = produtosString.join(",");
         console.log("📦 produtos_string =", campoHidden.value);
     }
 
-    // Atualiza a string ao mudar quantidades
     document.addEventListener("input", function (e) {
         if (e.target.classList.contains("input-quantidade")) {
             const linha = e.target.closest("tr");
@@ -95,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Atualiza o campo antes de enviar o formulário
     document.getElementById("create-form").addEventListener("submit", function () {
         const campoHidden = document.getElementById("produtos_string");
         if (!campoHidden) return;
@@ -110,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("🚀 Enviando produtos_string =", campoHidden.value);
     });
 
-    // Função de segurança para evitar injeção
     function escapeHtml(text) {
         if (text === undefined || text === null) return "";
         return text
@@ -121,6 +113,5 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace(/'/g, "&#039;");
     }
 
-    // Inicializa a tabela vazia
     atualizarTabelaPrincipal();
 });
