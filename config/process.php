@@ -26,13 +26,10 @@
 
         
         if($data["type"] === "pesquisa_inteligente") {
-              // pega o id enviado via POST
             $idCliente = $data['pesquisa_inteligente'];
 
-            // salva na sessão para ser consumido pela tela de listagem
             $_SESSION['pesquisa_inteligente'] = $idCliente;
 
-            // redireciona para a listagem (sem parâmetros GET) e interrompe execução
             header("Location: " . $BASE_URL . "../clientes_listar.php");
             exit;
         }
